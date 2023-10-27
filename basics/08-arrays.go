@@ -25,7 +25,7 @@ func getDayOfWeek(dayOfWeek int) string {
 }
 
 // again purchaseType should probably be some sort of custom type
-func printPurchases(pType string, purchases []float32) {
+func printPurchases(pType string, purchases [7]float32) {
 	fmt.Printf("List of %s purchases this week:\n", pType)
 	for i := 0; i < len(purchases); i++ {
 		d := getDayOfWeek(i + 1)
@@ -34,7 +34,8 @@ func printPurchases(pType string, purchases []float32) {
 }
 
 func main() {
-	var weeklyCoffees = []float32{3.25, 4.50, 4.99, 3.25, 4.25, 4.99, 6.50}
+	// Set length of array
+	var weeklyCoffees = [7]float32{3.25, 4.50, 4.99, 3.25, 4.25, 4.99, 6.50}
 	pType := "coffee"
 	printPurchases(pType, weeklyCoffees)
 	// new line for clarity
@@ -43,4 +44,9 @@ func main() {
 	weeklyCoffees[0] = 3.49
 	weeklyCoffees[1] = 4.99
 	printPurchases(pType, weeklyCoffees)
+	// new line for clarity
+	fmt.Println()
+	// Let go figure out length of array
+	var busCommute = [...]float32{2.25, 2.25, 2.25, 2.25, 2.25, 2.25, 2.25}
+	printPurchases("bus", busCommute)
 }
