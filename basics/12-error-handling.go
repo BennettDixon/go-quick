@@ -36,6 +36,13 @@ func addOneToPointer(value *int) *Error {
 // Use multiple return values instead
 // Convention is left return value, right error value
 func main() {
+	// Demo nil ptr error
+	err := addOneToPointer(nil)
+	if err != nil {
+		err.Print()
+	}
+
+	// Demo OB error
 	a := 1
 	for {
 		err := addOneToPointer(&a)
