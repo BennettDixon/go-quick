@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// Setup our Error struct & ErrorType
 type ErrorType int
 
 const (
@@ -18,7 +19,7 @@ func (e *Error) Print() {
 	fmt.Printf("Encountered error of type %d, message: %s\n", e.t, e.msg)
 }
 
-// pretty bad function but just for demo of how you might handle some errors
+// Simple add one by reference function
 func addOneToPointer(value *int) *Error {
 	obError := Error{msg: "Out of bounds value encountered! Cannot add past 10.", t: OutOfBoundsError}
 	nilPtrError := Error{msg: "Nil pointer error encountered!", t: NilPointerError}
@@ -33,8 +34,8 @@ func addOneToPointer(value *int) *Error {
 }
 
 // Go doesn't have exceptions or try / catch
-// Use multiple return values instead
-// Convention is left return value, right error value
+// Use multiple return values instead, or single in this case
+// Convention is left return value, right error value if using multiples (res, err)
 func main() {
 	// Demo nil ptr error
 	err := addOneToPointer(nil)
