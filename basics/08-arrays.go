@@ -24,11 +24,23 @@ func getDayOfWeek(dayOfWeek int) string {
 	}
 }
 
-func main() {
-	var weeklyCoffees = [7]float32{3.25, 4.50, 4.99, 3.25, 4.25, 4.99, 6.50}
-	fmt.Println("List of coffee purchases this week:")
-	for i := 0; i < len(weeklyCoffees); i++ {
+// again purchaseType should probably be some sort of custom type
+func printPurchases(pType string, purchases []float32) {
+	fmt.Printf("List of %s purchases this week:\n", pType)
+	for i := 0; i < len(purchases); i++ {
 		d := getDayOfWeek(i + 1)
-		fmt.Printf("Your coffee on %s was $%.2f\n", d, weeklyCoffees[i])
+		fmt.Printf("Your %s on %s was $%.2f\n", pType, d, purchases[i])
 	}
+}
+
+func main() {
+	var weeklyCoffees = []float32{3.25, 4.50, 4.99, 3.25, 4.25, 4.99, 6.50}
+	pType := "coffee"
+	printPurchases(pType, weeklyCoffees)
+	// new line for clarity
+	fmt.Println()
+	// oops we made a mistake entering the price (scenario), let's update an index!
+	weeklyCoffees[0] = 3.49
+	weeklyCoffees[1] = 4.99
+	printPurchases(pType, weeklyCoffees)
 }
