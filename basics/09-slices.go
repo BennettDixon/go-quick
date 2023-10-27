@@ -39,14 +39,14 @@ func printPurchases(pType string, purchases []float32) {
 func main() {
 	// Set length of array
 	var weeklyCoffees = []float32{3.25, 4.50, 4.99, 3.25, 4.25, 4.99, 6.50}
-	pType := "coffee"
-	printPurchases(pType, weeklyCoffees)
+	coffeePType := "coffee"
+	printPurchases(coffeePType, weeklyCoffees)
 	// new line for clarity
 	fmt.Println()
 	// oops we made a mistake entering the price (scenario), let's update an index!
 	weeklyCoffees[0] = 3.49
 	weeklyCoffees[1] = 4.99
-	printPurchases(pType, weeklyCoffees)
+	printPurchases(coffeePType, weeklyCoffees)
 	// new line for clarity
 	fmt.Println()
 	// Let go figure out length of array
@@ -66,4 +66,20 @@ func main() {
 	fmt.Println("JK! We used it Friday & Saturday as well!")
 	busCommute = append(busCommute, 2.25, 2.25)
 	printPurchases(busPType, busCommute)
+
+	// Demonstrate slicing slices & combining slices
+	// Let's grab our coffee purchases for Sun-Wed
+	fmt.Println()
+	sunThruWedCoffee := weeklyCoffees[:4]
+	printPurchases(coffeePType, sunThruWedCoffee)
+
+	fmt.Println()
+	// This won't print day of the week right but not really the point
+	thurThruSatCoffee := weeklyCoffees[4:]
+	printPurchases(coffeePType, thurThruSatCoffee)
+
+	// combine slices using dot notation
+	fmt.Println()
+	allCoffees := append(sunThruWedCoffee, thurThruSatCoffee...)
+	printPurchases(coffeePType, allCoffees)
 }
