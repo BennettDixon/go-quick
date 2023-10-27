@@ -27,6 +27,7 @@ func getDayOfWeek(dayOfWeek int) string {
 // again purchaseType should probably be some sort of custom type
 // Converted to use slices now for flexibility!
 // turns out not all purchases are weekly based!
+// Assumes purchases are ordered by day of week (dumb assumption but just for example)
 func printPurchases(pType string, purchases []float32) {
 	fmt.Printf("List of %s purchases this week:\n", pType)
 	for i := 0; i < len(purchases); i++ {
@@ -58,5 +59,11 @@ func main() {
 	fmt.Println("Oops turned out we needed to go in on Thursday too!")
 	// Add a new purchase to the slice
 	busCommute = append(busCommute, 2.25)
+	printPurchases(busPType, busCommute)
+	// Alright we actually used it Friday & Saturday too!
+	// (example appending multiple elements)
+	fmt.Println()
+	fmt.Println("JK! We used it Friday & Saturday as well!")
+	busCommute = append(busCommute, 2.25, 2.25)
 	printPurchases(busPType, busCommute)
 }
