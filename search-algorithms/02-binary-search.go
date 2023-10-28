@@ -2,6 +2,15 @@ package main
 
 import "fmt"
 
+// fun fact we write left + (right-left)/2 to reduce the risk of overflow
+// It is mathematically equivalent to left + right / 2 which is much more intuitive;
+// however the risk of overflow is higher
+// e.g 2 + 4 = 6 => / 2 = 3
+// but 4 - 2 = 2 => / 2 = 1 + 2 = 3 reduces chance of overflow since the highest number is 4 instead of 6
+
+// fun fact the left index is the insertion point if the element is not found
+// if we wish to find the insertion point we should return that instead
+
 func binarySearch(sorted []int, target int) int {
 	left := 0
 	right := len(sorted) - 1
