@@ -7,6 +7,10 @@ import "fmt"
 // however the risk of overflow is higher
 // e.g 2 + 4 = 6 => / 2 = 3
 // but 4 - 2 = 2 => / 2 = 1 + 2 = 3 reduces chance of overflow since the highest number is 4 instead of 6
+// so if we had 2147000000 elements and were using 32 bit integers
+// we could still use 2147000000 - 1073500000 => 1073500000 / 2 = 536750000 + 1073500000 = 1610250000
+// Where as we would overflow with the simpler version:
+// 2147000000 + 1073500000 => Overflow!
 
 // fun fact the left index is the insertion point if the element is not found
 // if we wish to find the insertion point we should return that instead
