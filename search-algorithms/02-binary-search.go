@@ -23,7 +23,11 @@ func binarySearch(sorted []int, target int) int {
 
 func main() {
 	list := []int{1, 2, 3, 50, 64, 75, 102}
-	i := binarySearch(list, 3)
+	i := binarySearch(list, 999)
+	if i != -1 {
+		fmt.Println("Test case failed! Should not find index for 999 it is not present")
+	}
+	i = binarySearch(list, 3)
 	if i != 2 {
 		fmt.Println("Test case failed! i should equal 2 for search of 3.")
 	}
@@ -37,5 +41,5 @@ func main() {
 	if i != -1 {
 		fmt.Println("Should not find an index for an empty list.")
 	}
-	fmt.Println("All indexes found as expected.")
+	fmt.Println("If nothing else is shown above, all indexes were found as expected.")
 }
