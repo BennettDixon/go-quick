@@ -6,13 +6,17 @@ import (
 )
 
 // rune = int32 in go
-type uniStr []rune
+// also commonly used to handle strings due to unicode
+type UniStr []rune
 
 // byte is just byte
-type asciiStr []byte
+// not common since no unicode support, but can be useful
+type AsciiStr []byte
 
 // modifying underlying array so don't need to pass a pointer to slice
-func (str asciiStr) ToUpper() {
+
+// Converts an asciiStr
+func (str AsciiStr) ToUpper() {
 	var offset byte = 'a' - 'A'
 	// should be 32 (constant offset for ascii)
 	for i, e := range str {
@@ -25,14 +29,14 @@ func (str asciiStr) ToUpper() {
 	}
 }
 
-func (str uniStr) ToUpper() {
+func (str UniStr) ToUpper() {
 	for i, e := range str {
 		str[i] = unicode.ToUpper(e)
 	}
 }
 
 func main() {
-	var s asciiStr = []byte("test123")
+	var s AsciiStr = []byte("test123")
 	fmt.Println("-------Asci------")
 	fmt.Printf("bytes pre upper: %b\n", s)
 	fmt.Printf("string pre upper: %s\n", s)
@@ -40,8 +44,8 @@ func main() {
 	fmt.Printf("bytes after upper: %b\n", s)
 	fmt.Printf("string after upper: %s\n", s)
 	fmt.Println("-----Unicode-----")
-	var helloS uniStr = []rune("Hello, 世界")
-	var emojiS uniStr = []rune("I love 🌞")
+	var helloS UniStr = []rune("Hello, 世界")
+	var emojiS UniStr = []rune("I love 🌞")
 	fmt.Printf("runes pre upper: %#U, %#U\n", helloS, emojiS)
 	fmt.Printf("string pre upper: helloS: %s\nemojiS: %s\n", string(helloS), string(emojiS))
 	helloS.ToUpper()
