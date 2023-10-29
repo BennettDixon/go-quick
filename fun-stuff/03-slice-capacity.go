@@ -70,6 +70,22 @@ func printSlice(slice []int) {
 	fmt.Println()
 }
 
+func insert(slice []int, index, value int) (newSlice []int, err error) {
+	defer func() {
+		if recover() != nil {
+			err = errors.New("Encountered error inserting element into slice!")
+		}
+	}()
+	// Grow the slice by one element.
+	newSlice = slice[0 : len(slice)+1]
+	// Use copy to move the upper part of the slice out of the way and open a hole.
+	copy(slice[index+1:], slice[index:])
+	// Store the new value.
+	newSlice[index] = value
+	// Return the result.
+	return
+}
+
 func main() {
 	s := []int{1, 2, 3}
 	_, err := willPanic(s, 1)
@@ -106,4 +122,20 @@ func main() {
 	printSlice(copiedSlice)
 	fmt.Printf("Capacity after insert (should be %d) %d\n", cap(newSlice)+10, cap(copiedSlice))
 	fmt.Printf("Length after insert %d\n", len(copiedSlice))
+	fmt.Println("------test-insert-------")
+
+	slice := make([]int, 10)
+	for i := range slice {
+		slice[i] = i
+	}
+	printSlice(slice)
+	// add some capacity to allow for our insert
+	// could have done in the make of slice, but this is a better demo
+	slice = addCapacityByValue(slice, 10)
+	slice, err = insert(slice, 5, 99)
+	if err != nil {
+		fmt.Println("Error occured inserting element to slice! Shouldn't happen since we set capacity > len")
+		fmt.Println(err)
+	}
+	printSlice(slice)
 }
