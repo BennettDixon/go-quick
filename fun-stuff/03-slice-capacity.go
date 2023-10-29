@@ -5,6 +5,10 @@ import (
 	"fmt"
 )
 
+// None of this is very practical but just interesting
+// to learn how slices work a bit better
+// roughly following https://go.dev/blog/slices
+
 func willPanic(slice []int, value int) (newSlice []int, err error) {
 	defer func() {
 		if recover() != nil {
