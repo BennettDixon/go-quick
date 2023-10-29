@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 // Setup our Error struct & ErrorType
 type ErrorType int
@@ -33,6 +36,17 @@ func addOneToPointer(value *int) *Error {
 	return nil
 }
 
+func willPanic() (err error) {
+	defer func() {
+		if recover() != nil {
+			err = errors.New("My panic error")
+		}
+	}()
+	// try to grow our slice by 1 in a poor way
+	// will panic because capacity is len
+	panic("panic!")
+}
+
 // Go doesn't have exceptions or try / catch
 // Use multiple return values instead, or single in this case
 // Convention is left return value, right error value if using multiples (res, err)
@@ -54,4 +68,11 @@ func main() {
 		}
 	}
 	fmt.Printf("Added a to its max capacity, result: %d\n", a)
+
+	// Show handling a panic
+	basicErr := willPanic()
+	if basicErr != nil {
+		fmt.Println("Handled panic and got error back")
+		fmt.Println(basicErr.Error())
+	}
 }
