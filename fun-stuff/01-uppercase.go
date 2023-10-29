@@ -7,8 +7,7 @@ type asciiStr []byte
 // modifying underlying array so don't need to pass a pointer to slice
 func (str asciiStr) ToUpper() {
 	var offset byte = 'a' - 'A'
-	// should be -32 (constant offset for ascii)
-	fmt.Printf("Offset %d\n", offset)
+	// should be 32 (constant offset for ascii)
 	for i, e := range str {
 		// ascii letters a-z are higher than A-Z (note)
 		// make sure it is a lowercase letter
