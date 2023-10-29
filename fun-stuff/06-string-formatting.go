@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// source: https://go.dev/blog/strings
+
 func main() {
 	const sample = "\xbd\xb2\x3d\xbc\x20\xe2\x8c\x98"
 	sampleBytes := []byte(sample)
