@@ -1,7 +1,14 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"unicode"
+)
 
+// rune = int32 in go
+type uniStr []rune
+
+// byte is just byte
 type asciiStr []byte
 
 // modifying underlying array so don't need to pass a pointer to slice
@@ -18,11 +25,27 @@ func (str asciiStr) ToUpper() {
 	}
 }
 
+func (str uniStr) ToUpper() {
+	for i, e := range str {
+		str[i] = unicode.ToUpper(e)
+	}
+}
+
 func main() {
 	var s asciiStr = []byte("test123")
-	fmt.Printf("bytes Pre upper: %b\n", s)
-	fmt.Printf("string Pre upper: %s\n", s)
+	fmt.Println("-------Asci------")
+	fmt.Printf("bytes pre upper: %b\n", s)
+	fmt.Printf("string pre upper: %s\n", s)
 	s.ToUpper()
-	fmt.Printf("bytes After upper: %b\n", s)
-	fmt.Printf("string After upper: %s\n", s)
+	fmt.Printf("bytes after upper: %b\n", s)
+	fmt.Printf("string after upper: %s\n", s)
+	fmt.Println("-----Unicode-----")
+	var helloS uniStr = []rune("Hello, 世界")
+	var emojiS uniStr = []rune("I love 🌞")
+	fmt.Printf("runes pre upper: %#U, %#U\n", helloS, emojiS)
+	fmt.Printf("string pre upper: helloS: %s\nemojiS: %s\n", string(helloS), string(emojiS))
+	helloS.ToUpper()
+	emojiS.ToUpper()
+	fmt.Printf("runes after upper: %#U, %#U\n", helloS, emojiS)
+	fmt.Printf("string after upper: helloS: %s\nemojiS: %s\n", string(helloS), string(emojiS))
 }
