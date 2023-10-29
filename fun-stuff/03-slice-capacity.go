@@ -14,7 +14,7 @@ func willPanic(slice []int, value int) (newSlice []int, err error) {
 	// try to grow our slice by 1 in a poor way
 	// will panic because capacity is len
 	newSlice = slice[:len(slice)+1]
-	return newSlice, nil
+	return
 }
 
 func addCapacityByValueNoReturnWillNotWork(slice []int, value int) {
