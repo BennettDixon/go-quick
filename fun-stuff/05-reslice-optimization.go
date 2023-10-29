@@ -8,8 +8,8 @@ import "fmt"
 // copy it to a new slice
 
 // in reality maybe this would fetch a file or something
+// this is not a big slice but for example
 func getBigSlice() []int {
-	// this is not a big array but for example
 	return []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
 }
 
