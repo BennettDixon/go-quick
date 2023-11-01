@@ -52,7 +52,26 @@ func (d DirectedGraph) PrintDepthFirstIterative(s string) {
 // for breadth first traversal we use a queue
 // BREADTH FIRST USES QUEUES BUT QUE bread?? (jokes)
 func (d DirectedGraph) PrintBreadthFirst(s string) {
-
+	// the logic is the same as DFS, but we just use a queue
+	v := make(map[string]bool)
+	queue := []string{}
+	queue = append(queue, s)
+	for len(queue) > 0 {
+		// dequeue the element
+		element := queue[0]
+		queue = queue[1:]
+		// if we haven't visited the element, print & add unvisited neighbors
+		if !v[element] {
+			fmt.Println(element)
+			v[element] = true
+			for _, n := range d[element] {
+				// only add the neighbor if we haven't visited it
+				if !v[n] {
+					queue = append(queue, n)
+				}
+			}
+		}
+	}
 }
 
 func main() {
@@ -71,13 +90,14 @@ func main() {
 	addEdge(dg, "Train", "Evaluate")
 	addEdge(dg, "Validate", "Evaluate")
 
-	// make a map to know if we visited the nodes
 	// they actually won't match because recursion reverses
 	// the output, but if we want to match we could
 	// instead add neighbors in reverse in our iterative approach
 	fmt.Println("Depth first recursion:")
+	// make a map to know if we visited the nodes since we use recursion
 	dFirstVisited := make(map[string]bool)
 	dg.PrintDepthFirstRecursion("Collect", dFirstVisited)
+	// iterative will make this map itself
 	fmt.Println("Depth first iterative")
 	dg.PrintDepthFirstIterative("Collect")
 	fmt.Println("Breadth first:")
