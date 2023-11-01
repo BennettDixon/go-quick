@@ -4,40 +4,6 @@ import "fmt"
 
 type DirectedGraph map[string][]string
 
-// FIFO (Breadth first)
-type GraphQueue []*DirectedGraph
-
-// LIFO (Depth first)
-type GraphStack []*DirectedGraph
-
-// add element to end of queue
-func (q GraphQueue) Enqueue(d *DirectedGraph) {
-	q = append(q, d)
-}
-
-// remove first element from start and reallocate
-func (q GraphQueue) Dequeue() *DirectedGraph {
-	if len(q) == 0 {
-		return nil
-	}
-	d := q[0]
-	q = q[1:]
-	return d
-}
-
-// push to end of stack
-func (s GraphStack) Push(d *DirectedGraph) {
-	s = append(s, d)
-}
-
-// remove from end of stack
-func (s GraphStack) Pop() *DirectedGraph {
-	i := len(s) - 1
-	d := s[i]
-	s = s[:i]
-	return d
-}
-
 // add an edge to our adjacency list
 func addEdge(graph DirectedGraph, u, v string) {
 	graph[u] = append(graph[u], v)
@@ -45,13 +11,47 @@ func addEdge(graph DirectedGraph, u, v string) {
 
 // for depth first traversal we use a stack
 // DEPTH FIRST USES STACKS BUT STAy going down! (jokes)
-func (d *DirectedGraph) PrintDepthFirst() {
+// Recursively print elements depth first
+func (d DirectedGraph) PrintDepthFirstRecursion(s string, v map[string]bool) {
+	v[s] = true
+	fmt.Println(s)
+	for _, n := range d[s] {
+		if !v[n] {
+			d.PrintDepthFirstRecursion(n, v)
+		}
+	}
+}
 
+// Iteratively print elements depth first
+func (d DirectedGraph) PrintDepthFirstIterative(s string) {
+	// track nodes visited already
+	v := make(map[string]bool)
+	// make a stack
+	stack := []string{}
+	// push the root onto the stack
+	stack = append(stack, s)
+	for len(stack) > 0 {
+		// pop an item off the stack
+		i := len(stack) - 1
+		element := stack[i]
+		stack = stack[:i]
+		// loop through the neighbors
+		if !v[element] {
+			fmt.Println(element)
+			v[element] = true
+			// Add unvisited neighbors to stack
+			for _, neighbor := range d[element] {
+				if !v[neighbor] {
+					stack = append(stack, neighbor)
+				}
+			}
+		}
+	}
 }
 
 // for breadth first traversal we use a queue
 // BREADTH FIRST USES QUEUES BUT QUE bread?? (jokes)
-func (d *DirectedGraph) PrintBreadthFirst() {
+func (d DirectedGraph) PrintBreadthFirst(s string) {
 
 }
 
@@ -71,8 +71,15 @@ func main() {
 	addEdge(dg, "Train", "Evaluate")
 	addEdge(dg, "Validate", "Evaluate")
 
+	// make a map to know if we visited the nodes
+	// they actually won't match because recursion reverses
+	// the output, but if we want to match we could
+	// instead add neighbors in reverse in our iterative approach
+	fmt.Println("Depth first recursion:")
+	dFirstVisited := make(map[string]bool)
+	dg.PrintDepthFirstRecursion("Collect", dFirstVisited)
+	fmt.Println("Depth first iterative")
+	dg.PrintDepthFirstIterative("Collect")
 	fmt.Println("Breadth first:")
-	dg.PrintBreadthFirst()
-	fmt.Println("Depth first:")
-	dg.PrintDepthFirst()
+	dg.PrintBreadthFirst("Collect")
 }
